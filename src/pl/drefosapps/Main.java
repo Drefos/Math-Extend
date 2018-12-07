@@ -1,4 +1,4 @@
-package sample;
+package pl.drefosapps;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
