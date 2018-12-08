@@ -21,8 +21,8 @@
    <center>
       <VBox fx:id="vBox" prefWidth="${borderPane.width*3/4}">
          <children>
-            <TextArea prefHeight="${vBox.height*2/3}" />
-            <TextArea prefHeight="${vBox.height/3}" />
+            <TextArea fx:id="inputTextArea" prefHeight="${vBox.height*2/3}" />
+            <TextArea fx:id="outputTextArea" prefHeight="${vBox.height/3}" />
          </children>
       </VBox>
    </center>
