@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:controller="pl.drefosapps.controller.MainController" fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <right>
+       <TableView fx:id="tableView" prefWidth="${borderPane.width/4}">
+           <columns>
+               <TableColumn editable="false" prefWidth="${tableView.width/3}" resizable="false" sortable="false" text="Label" />
+               <TableColumn editable="false" prefWidth="${tableView.width*2/3}" resizable="false" sortable="false" text="Value" />
+           </columns>
+       </TableView>
+   </right>
+   <center>
+      <VBox fx:id="vBox" prefWidth="${borderPane.width*3/4}">
+         <children>
+            <TextArea fx:id="inputTextArea" prefHeight="${vBox.height*2/3}" />
+            <TextArea fx:id="outputTextArea" prefHeight="${vBox.height/3}" />
+         </children>
+      </VBox>
+   </center>
+   <top>
+   </top>
+   <bottom>
+   </bottom>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Console">
+            <items>
+              <MenuItem fx:id="clearInput" mnemonicParsing="false" text="Clear Input" />
+              <MenuItem fx:id="clearOutput" mnemonicParsing="false" text="Clear Output" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+</BorderPane>
