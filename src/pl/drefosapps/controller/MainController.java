@@ -24,6 +24,11 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        configMenu();
+    }
 
+    private void configMenu() {
+        clearInput.setOnAction(x -> inputTextArea.clear());
+        clearOutput.setOnAction(x -> outputTextArea.clear());
     }
 }
