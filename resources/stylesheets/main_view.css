@@ -1,0 +1,12 @@
+.text-area {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 18;
+}
+
+.text-area .content {
+    -fx-background-color: #373737;
+}
+
+.text-area .scroll-bar {
+    -fx-background-color: #282828;
+}
