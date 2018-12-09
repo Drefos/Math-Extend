@@ -13,11 +13,11 @@ public class NumberTest {
 
     @Test
     public void shouldReturn12Test() {
-        assertEquals(12, number.getValue());
+        assertEquals(12.0, number.getValue());
     }
 
     @Test
     public void shouldReturnAeq12Test() {
-        assertEquals("A = 12", number.toString());
+        assertEquals("A = 12.0", number.toString());
     }
 }
