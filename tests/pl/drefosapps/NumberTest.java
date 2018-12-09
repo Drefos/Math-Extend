@@ -2,6 +2,7 @@ package pl.drefosapps;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import pl.drefosapps.model.Number;
 
 public class NumberTest {
     Number number = new Number("A", 12);
