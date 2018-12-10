@@ -1,6 +1,7 @@
 package pl.drefosapps;
 
 import org.junit.jupiter.api.Test;
+import pl.drefosapps.model.Interpreter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
