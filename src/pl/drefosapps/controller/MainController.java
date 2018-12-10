@@ -9,6 +9,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
 import pl.drefosapps.model.Number;
 
 import java.net.URL;
@@ -50,5 +51,8 @@ public class MainController implements Initializable {
                 tableView.setItems(FXCollections.observableArrayList(variables.values()));
             }
         });
+        StackPane placeHolder = new StackPane();
+        placeHolder.setStyle("-fx-background-color:linear-gradient(from 50px 12px to 50px 37px , repeat, #686868 49% , #373737 12% )");
+        tableView.setPlaceholder(placeHolder);
     }
 }
