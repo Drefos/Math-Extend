@@ -1,8 +1,14 @@
 package pl.drefosapps.model;
 
 import java.util.Arrays;
+import java.util.Map;
 
 public class Calculator {
+    private Map<String, Number> variables;
+
+    public Calculator(Map<String, Number> variables) {
+        this.variables = variables;
+    }
 
     public String calculate(String expression) {
 
