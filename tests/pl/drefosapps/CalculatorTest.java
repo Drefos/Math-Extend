@@ -9,11 +9,12 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CalcuatorTest {
-    Calculator calc = new Calculator();
-    Map<String, Number> variables = new HashMap<>();
+public class CalculatorTest {
+    Calculator calc;
+    Map<String, Number> variables;
 
-    public CalcuatorTest() {
+    public CalculatorTest() {
+        calc = new Calculator();
         this.variables = new HashMap<>();
         variables.put("A", new Number("A", 13.4));
         variables.put("B", new Number("B", 5.5));
