@@ -1,6 +1,7 @@
 package pl.drefosapps;
 
 import org.junit.jupiter.api.Test;
+import pl.drefosapps.model.Calculator;
 import pl.drefosapps.model.Number;
 
 import java.util.HashMap;
