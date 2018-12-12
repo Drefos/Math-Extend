@@ -11,8 +11,24 @@ public class Calculator {
     }
 
     public String calculate(String expression) {
+        replaceVariables(expression);
 
         return "";
+    }
+
+    private void replaceVariables(String expression) {
+        for (int i = getIndexOfVariable(expression); i != -1; i = getIndexOfVariable(expression)) {
+            expression = expression.replaceAll(
+                    String.valueOf(expression.charAt(i)),
+                    String.valueOf(variables.get(String.valueOf(expression.charAt(i))).getValue()));
+        }
+    }
+
+    private int getIndexOfVariable(String expression) {
+        for (int i = 0; i < expression.length(); i++) {
+            if (expression.charAt(i) >= 'A' && expression.charAt(i) <= 'Z') return i;
+        }
+        return -1;
     }
 
     private enum Function {
