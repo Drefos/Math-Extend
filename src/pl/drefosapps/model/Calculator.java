@@ -15,7 +15,9 @@ public class Calculator {
     public String calculate(String expression) {
         replaceVariables(expression);
         calculateBasicOperations(expression);
-        return "";
+        if(Functions.isFunction(expression))
+            calculateFunction(expression);
+        return expression;
     }
 
     private void replaceVariables(String expression) {
@@ -131,6 +133,72 @@ public class Calculator {
                 return i;
         }
         return -1;
+    }
+
+    private void calculateFunction(String expression) {
+        int begin = 0, end = 0;
+        while (end < expression.length() && 'a' <= expression.charAt(end) && expression.charAt(end) <= 'z') end++;
+        String function = expression.substring(begin, end).toUpperCase();
+        String innerExpression = expression.substring(end);
+        switch (Functions.valueOf(function)) {
+            case SIN: {
+                expression = String.valueOf(Math.sin(Double.valueOf(innerExpression)));
+                break;
+            }
+            case COS: {
+                expression = String.valueOf(Math.cos(Double.valueOf(innerExpression)));
+                break;
+            }
+            case TG: {
+                expression = String.valueOf(Math.tan(Double.valueOf(innerExpression)));
+                break;
+            }
+            case POW: {
+                expression = String.valueOf(Math.pow(Double.valueOf(innerExpression.split(",")[0]), Double.valueOf(innerExpression.split(",")[1])));
+                break;
+            }
+            case SQRT: {
+                expression = String.valueOf(Math.sqrt(Double.valueOf(innerExpression)));
+                break;
+            }
+            case CBRT: {
+                expression = String.valueOf(Math.cbrt(Double.valueOf(innerExpression)));
+                break;
+            }
+            case LN: {
+                expression = String.valueOf(Math.log(Double.valueOf(innerExpression)));
+                break;
+            }
+            case LOG: {
+                expression = String.valueOf(Math.log10(Double.valueOf(innerExpression)));
+                break;
+            }
+            case ROUND: {
+                if(expression.contains(",")) {
+                    double accuracy = Math.pow(10, Double.valueOf(innerExpression.split(",")[1]));
+                    expression = String.valueOf(Math.round(Double.valueOf(innerExpression.split(",")[0])*accuracy)/accuracy);
+                }
+
+                expression = String.valueOf(Math.round(Double.valueOf(innerExpression)));
+                break;
+            }
+            case CEIL: {
+                if(expression.contains(",")) {
+                    double accuracy = Math.pow(10, Double.valueOf(innerExpression.split(",")[1]));
+                    expression = String.valueOf(Math.ceil(Double.valueOf(innerExpression.split(",")[0])*accuracy)/accuracy);
+                } else
+                    expression = String.valueOf(Math.ceil(Double.valueOf(innerExpression)));
+                break;
+            }
+            case FLOOR: {
+                if(expression.contains(",")) {
+                    double accuracy = Math.pow(10, Double.valueOf(innerExpression.split(",")[1]));
+                    expression = String.valueOf(Math.floor(Double.valueOf(innerExpression.split(",")[0])*accuracy)/accuracy);
+                } else
+                    expression = String.valueOf(Math.floor(Double.valueOf(innerExpression)));
+                break;
+            }
+        }
     }
 
     private enum Functions {
