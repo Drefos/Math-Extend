@@ -13,19 +13,20 @@ public class Calculator {
     }
 
     public String calculate(String expression) {
-        replaceVariables(expression);
-        calculateBasicOperations(expression);
+        expression = replaceVariables(expression);
+        expression = calculateBasicOperations(expression);
         if(Functions.isFunction(expression))
             calculateFunction(expression);
         return expression;
     }
 
-    private void replaceVariables(String expression) {
+    private String replaceVariables(String expression) {
         for (int i = getIndexOfVariable(expression); i != -1; i = getIndexOfVariable(expression)) {
             expression = expression.replaceAll(
                     String.valueOf(expression.charAt(i)),
                     String.valueOf(variables.get(String.valueOf(expression.charAt(i))).getValue()));
         }
+        return expression.replaceAll("pi", String.valueOf(Math.PI));
     }
 
     private int getIndexOfVariable(String expression) {
@@ -35,7 +36,7 @@ public class Calculator {
         return -1;
     }
 
-    private void calculateBasicOperations(String expression) {
+    private String calculateBasicOperations(String expression) {
         int multiplicationIndex = findMultiplication(expression);
         int divisionIndex = findDivision(expression);
         int operatorIndex;
@@ -59,6 +60,7 @@ public class Calculator {
             expression = replaceOperationWithResult(expression, firstNumber, secondNumber, expression.charAt(operatorIndex));
 
         }
+        return expression;
     }
 
     private int getEarlierIndex(int multiplicationIndex, int divisionIndex) {
