@@ -16,7 +16,7 @@ public class Calculator {
         expression = replaceVariables(expression);
         expression = calculateBasicOperations(expression);
         if(Functions.isFunction(expression))
-            calculateFunction(expression);
+            expression = calculateFunction(expression);
         return expression;
     }
 
@@ -142,11 +142,11 @@ public class Calculator {
         return -1;
     }
 
-    private void calculateFunction(String expression) {
+    private String calculateFunction(String expression) {
         int begin = 0, end = 0;
         while (end < expression.length() && 'a' <= expression.charAt(end) && expression.charAt(end) <= 'z') end++;
         String function = expression.substring(begin, end).toUpperCase();
-        String innerExpression = expression.substring(end);
+        String innerExpression = expression.substring(end+1, expression.length()-1);
         switch (Functions.valueOf(function)) {
             case SIN: {
                 expression = String.valueOf(Math.sin(Double.valueOf(innerExpression)));
@@ -206,6 +206,7 @@ public class Calculator {
                 break;
             }
         }
+        return expression;
     }
 
     private enum Functions {
