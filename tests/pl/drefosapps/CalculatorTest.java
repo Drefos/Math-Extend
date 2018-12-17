@@ -14,11 +14,11 @@ public class CalculatorTest {
     Map<String, Number> variables;
 
     public CalculatorTest() {
-        calc = new Calculator();
         this.variables = new HashMap<>();
         variables.put("A", new Number("A", 13.4));
         variables.put("B", new Number("B", 5.5));
         variables.put("C", new Number("C", -3.25));
+        calc = new Calculator(variables);
     }
 
     @Test
@@ -29,37 +29,37 @@ public class CalculatorTest {
         String subtraction = "54.82-27.12";
         assertEquals("27.7", calc.calculate(subtraction));
 
-        String multiplication = "31*6.25";
+        String multiplication = "31.0*6.25";
         assertEquals("193.75", calc.calculate(multiplication));
 
-        String division = "27/15";
+        String division = "27.0/15.0";
         assertEquals("1.8", calc.calculate(division));
     }
 
     @Test
     void checkOrderOfOperatorsTest() {
-        String l1 = "2+2*2";
+        String l1 = "2.0+2.0*2.0";
         assertEquals("6.0", calc.calculate(l1));
 
-        String l2 = "13.7-24.6/3+3.9*7.1";
+        String l2 = "13.7-24.6/3.0+3.9*7.1";
         assertEquals("33.19", calc.calculate(l2));
 
-        String l3 = "5/2*3-6+0.1";
-        assertEquals("11.6", calc.calculate(l3));
+        String l3 = "5.0/2.0*3.0-6.0+0.1";
+        assertEquals("1.6", calc.calculate(l3));
     }
 
     @Test
     void checkFunctionsCalculationsTest() {
-        String sin = "sin(pi/4)";
+        String sin = "sin(pi/6.0)";
         assertEquals("0.5", calc.calculate(sin));
 
         String cos = "cos(pi)";
         assertEquals("-1.0", calc.calculate(cos));
 
-        String tg = "tg(pi/4)";
+        String tg = "tg(pi/4.0)";
         assertEquals("1.0", calc.calculate(tg));
 
-        String pow = "pow(3,4)";
+        String pow = "pow(3.0,4.0)";
         assertEquals("81.0", calc.calculate(pow));
 
         String sqrt = "sqrt(6.25)";
@@ -68,16 +68,16 @@ public class CalculatorTest {
         String cbrt = "cbrt(0.343)";
         assertEquals("0.7", calc.calculate(cbrt));
 
-        String ln = "ln(1)";
+        String ln = "ln(1.0)";
         assertEquals("0.0", calc.calculate(ln));
 
-        String log = "log(100)";
+        String log = "log(100.0)";
         assertEquals("2.0", calc.calculate(log));
 
         String round1 = "round(5.23)";
         assertEquals("5.0", calc.calculate(round1));
 
-        String round2 = "round(5.23,1)";
+        String round2 = "round(5.23,1.0)";
         assertEquals("5.2", calc.calculate(round2));
 
         String ceil = "ceil(37.3)";
@@ -93,7 +93,7 @@ public class CalculatorTest {
         assertEquals("3.0", calc.calculate(l1));
 
         String l2 = "B*C+A";
-        assertEquals("4.475", calc.calculate(l2));
+        assertEquals("-4.475", calc.calculate(l2));
 
         String l3 = "floor(C)";
         assertEquals("-4.0", calc.calculate(l3));
