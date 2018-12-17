@@ -126,7 +126,7 @@ public class Calculator {
                 result = firstNumber - secondNumber;
                 break;
         }
-        return expression.replaceAll("" + firstNumber + operation + secondNumber, String.valueOf(result));
+        return expression.replace("" + firstNumber + operation + secondNumber, String.valueOf(result));
     }
 
     private int getFirstOperatorIndex(String expression) {
