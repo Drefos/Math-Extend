@@ -17,7 +17,7 @@ public class Calculator {
         expression = calculateBasicOperations(expression);
         if(Functions.isFunction(expression))
             expression = calculateFunction(expression);
-        return expression;
+        return String.valueOf(Math.round(Double.valueOf(expression)*Math.pow(10, 10))/Math.pow(10, 10));
     }
 
     private String replaceVariables(String expression) {
