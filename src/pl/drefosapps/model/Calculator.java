@@ -93,12 +93,15 @@ public class Calculator {
 
     private double getNumberAfterIndex(String expression, int operatorIndex) {
         int i = operatorIndex + 1;
+        if(expression.charAt(i) == '-') i++;
         while (i < expression.length() && isNumber(expression, i)) i++;
         return Double.valueOf(expression.substring(operatorIndex + 1, i));
     }
 
     private boolean isNumber(String expression, int i) {
         char c = expression.charAt(i);
+        if(c=='-' && i == 0) return true;
+        if(c=='-' && isOperator(expression.charAt(i-1))) return true;
         return (!isOperator(c) && c != ',' && c != '(' && c != ')');
     }
 
@@ -135,8 +138,8 @@ public class Calculator {
     }
 
     private int getFirstOperatorIndex(String expression) {
-        for (int i = 0; i < expression.length(); i++) {
-            if (isOperator(expression.charAt(i)))
+        for (int i = 1; i < expression.length(); i++) {
+            if (isOperator(expression.charAt(i)) && isNumber(expression, i-1))
                 return i;
         }
         return -1;
