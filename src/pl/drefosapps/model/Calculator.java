@@ -1,6 +1,8 @@
 package pl.drefosapps.model;
 
-import java.util.Arrays;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Calculator {
@@ -131,17 +133,22 @@ public class Calculator {
         return -1;
     }
 
-    private enum Function {
-        SIN("sin"), COS("cos"), TG("tg"), POW("pow"),
-        SQRT("sqrt"), CBRT("cbrt"), LN("ln"), LOG("log"),
-        ROUND("round"), CEIL("ceil"), FLOOR("floor");
-        Function(String function){}
+    private enum Functions {
+        SIN, COS, TG, POW, SQRT, CBRT, LN, LOG, ROUND, CEIL, FLOOR;
 
-        public boolean isFunction(String expression) {
+        static List<String> functions;
+
+        static {
+            functions = new ArrayList<>();
+            for (Field f : Functions.class.getFields())
+                functions.add(f.getName());
+        }
+
+        public static boolean isFunction(String expression) {
             int begin = 0, end = 0;
-            while('a' <= expression.charAt(end) && expression.charAt(end) <= 'z') end++;
-            String fun = expression.substring(begin, end).toUpperCase();
-            return Arrays.asList(Function.values()).contains(Function.valueOf(fun));
+            while (end < expression.length() && 'a' <= expression.charAt(end) && expression.charAt(end) <= 'z') end++;
+            String function = expression.substring(begin, end).toUpperCase();
+            return functions.contains(function);
         }
     }
 }
