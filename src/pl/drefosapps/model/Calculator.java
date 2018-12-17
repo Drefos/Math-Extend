@@ -187,9 +187,8 @@ public class Calculator {
                 if(expression.contains(",")) {
                     double accuracy = Math.pow(10, Double.valueOf(innerExpression.split(",")[1]));
                     expression = String.valueOf(Math.round(Double.valueOf(innerExpression.split(",")[0])*accuracy)/accuracy);
-                }
-
-                expression = String.valueOf(Math.round(Double.valueOf(innerExpression)));
+                } else
+                    expression = String.valueOf(Math.round(Double.valueOf(innerExpression)));
                 break;
             }
             case CEIL: {
