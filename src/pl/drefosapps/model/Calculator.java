@@ -87,14 +87,19 @@ public class Calculator {
 
     private double getNumberBeforeIndex(String expression, int operatorIndex) {
         int i = operatorIndex - 1;
-        while (i >= 0 && !isOperator(expression.charAt(i)) && expression.charAt(i) != ',') i--;
+        while (i >= 0 && isNumber(expression, i)) i--;
         return Double.valueOf(expression.substring(i+1, operatorIndex));
     }
 
     private double getNumberAfterIndex(String expression, int operatorIndex) {
         int i = operatorIndex + 1;
-        while (i < expression.length() && !isOperator(expression.charAt(i)) && expression.charAt(i) != ',') i++;
+        while (i < expression.length() && isNumber(expression, i)) i++;
         return Double.valueOf(expression.substring(operatorIndex + 1, i));
+    }
+
+    private boolean isNumber(String expression, int i) {
+        char c = expression.charAt(i);
+        return (!isOperator(c) && c != ',' && c != '(' && c != ')');
     }
 
     private boolean isOperator(char c) {
