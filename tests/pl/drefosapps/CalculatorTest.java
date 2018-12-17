@@ -84,7 +84,7 @@ public class CalculatorTest {
         assertEquals("38.0", calc.calculate(ceil));
 
         String floor = "floor(13.7)";
-        assertEquals("13.0",calc.calculate(floor));
+        assertEquals("13.0", calc.calculate(floor));
     }
 
     @Test

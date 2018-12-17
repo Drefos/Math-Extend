@@ -15,9 +15,9 @@ public class Calculator {
     public String calculate(String expression) {
         expression = replaceVariables(expression);
         expression = calculateBasicOperations(expression);
-        if(Functions.isFunction(expression))
+        if (Functions.isFunction(expression))
             expression = calculateFunction(expression);
-        return String.valueOf(Math.round(Double.valueOf(expression)*Math.pow(10, 10))/Math.pow(10, 10));
+        return String.valueOf(Math.round(Double.valueOf(expression) * Math.pow(10, 10)) / Math.pow(10, 10));
     }
 
     private String replaceVariables(String expression) {
@@ -64,8 +64,8 @@ public class Calculator {
     }
 
     private int getEarlierIndex(int multiplicationIndex, int divisionIndex) {
-        if(multiplicationIndex == -1) return divisionIndex;
-        if(divisionIndex == -1) return multiplicationIndex;
+        if (multiplicationIndex == -1) return divisionIndex;
+        if (divisionIndex == -1) return multiplicationIndex;
         return multiplicationIndex < divisionIndex ? multiplicationIndex : divisionIndex;
     }
 
@@ -88,20 +88,20 @@ public class Calculator {
     private double getNumberBeforeIndex(String expression, int operatorIndex) {
         int i = operatorIndex - 1;
         while (i >= 0 && isNumber(expression, i)) i--;
-        return Double.valueOf(expression.substring(i+1, operatorIndex));
+        return Double.valueOf(expression.substring(i + 1, operatorIndex));
     }
 
     private double getNumberAfterIndex(String expression, int operatorIndex) {
         int i = operatorIndex + 1;
-        if(expression.charAt(i) == '-') i++;
+        if (expression.charAt(i) == '-') i++;
         while (i < expression.length() && isNumber(expression, i)) i++;
         return Double.valueOf(expression.substring(operatorIndex + 1, i));
     }
 
     private boolean isNumber(String expression, int i) {
         char c = expression.charAt(i);
-        if(c=='-' && i == 0) return true;
-        if(c=='-' && isOperator(expression.charAt(i-1))) return true;
+        if (c == '-' && i == 0) return true;
+        if (c == '-' && isOperator(expression.charAt(i - 1))) return true;
         return (!isOperator(c) && c != ',' && c != '(' && c != ')');
     }
 
@@ -139,7 +139,7 @@ public class Calculator {
 
     private int getFirstOperatorIndex(String expression) {
         for (int i = 1; i < expression.length(); i++) {
-            if (isOperator(expression.charAt(i)) && isNumber(expression, i-1))
+            if (isOperator(expression.charAt(i)) && isNumber(expression, i - 1))
                 return i;
         }
         return -1;
@@ -149,7 +149,7 @@ public class Calculator {
         int begin = 0, end = 0;
         while (end < expression.length() && 'a' <= expression.charAt(end) && expression.charAt(end) <= 'z') end++;
         String function = expression.substring(begin, end).toUpperCase();
-        String innerExpression = expression.substring(end+1, expression.length()-1);
+        String innerExpression = expression.substring(end + 1, expression.length() - 1);
         switch (Functions.valueOf(function)) {
             case SIN: {
                 expression = String.valueOf(Math.sin(Double.valueOf(innerExpression)));
@@ -184,25 +184,25 @@ public class Calculator {
                 break;
             }
             case ROUND: {
-                if(expression.contains(",")) {
+                if (expression.contains(",")) {
                     double accuracy = Math.pow(10, Double.valueOf(innerExpression.split(",")[1]));
-                    expression = String.valueOf(Math.round(Double.valueOf(innerExpression.split(",")[0])*accuracy)/accuracy);
+                    expression = String.valueOf(Math.round(Double.valueOf(innerExpression.split(",")[0]) * accuracy) / accuracy);
                 } else
                     expression = String.valueOf(Math.round(Double.valueOf(innerExpression)));
                 break;
             }
             case CEIL: {
-                if(expression.contains(",")) {
+                if (expression.contains(",")) {
                     double accuracy = Math.pow(10, Double.valueOf(innerExpression.split(",")[1]));
-                    expression = String.valueOf(Math.ceil(Double.valueOf(innerExpression.split(",")[0])*accuracy)/accuracy);
+                    expression = String.valueOf(Math.ceil(Double.valueOf(innerExpression.split(",")[0]) * accuracy) / accuracy);
                 } else
                     expression = String.valueOf(Math.ceil(Double.valueOf(innerExpression)));
                 break;
             }
             case FLOOR: {
-                if(expression.contains(",")) {
+                if (expression.contains(",")) {
                     double accuracy = Math.pow(10, Double.valueOf(innerExpression.split(",")[1]));
-                    expression = String.valueOf(Math.floor(Double.valueOf(innerExpression.split(",")[0])*accuracy)/accuracy);
+                    expression = String.valueOf(Math.floor(Double.valueOf(innerExpression.split(",")[0]) * accuracy) / accuracy);
                 } else
                     expression = String.valueOf(Math.floor(Double.valueOf(innerExpression)));
                 break;
