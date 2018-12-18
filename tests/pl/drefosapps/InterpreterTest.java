@@ -2,12 +2,25 @@ package pl.drefosapps;
 
 import org.junit.jupiter.api.Test;
 import pl.drefosapps.model.Interpreter;
+import pl.drefosapps.model.Number;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InterpreterTest {
 
-    Interpreter interpreter = new Interpreter();
+    Interpreter interpreter;
+    Map<String, Number> variables;
+
+    public InterpreterTest() {
+        this.variables = new HashMap<>();
+        variables.put("A", new Number("A", 13.4));
+        variables.put("B", new Number("B", 5.5));
+        variables.put("C", new Number("C", -3.25));
+        this.interpreter = new Interpreter(variables);
+    }
 
     @Test
     void checkBasicOperationsTest() {
