@@ -5,15 +5,28 @@ import java.util.Stack;
 
 public class Interpreter {
     private Calculator calculator;
+    private boolean assignment;
+    private Map<String, Number> variables;
+    private String label;
 
     public Interpreter(Map<String, Number> variables) {
+        this.variables = variables;
         this.calculator = new Calculator(variables);
     }
 
     public String interpret(String expression) {
         expression = expression.replaceAll(" ", "");
-        expression = execute(expression);
-        return expression;
+        expression = checkAssignment(expression);
+        String result = execute(expression);
+        if(assignment)
+            result = saveAndReturnNumber(result);
+        return result;
+    }
+
+    private String checkAssignment(String expression) {
+        assignment = expression.contains("=");
+        label = String.valueOf(expression.charAt(0));
+        return assignment ? expression.substring(2) : expression;
     }
 
     private String execute(String expression) {
@@ -43,5 +56,13 @@ public class Interpreter {
             }
         }
         return calculator.calculate(expression);
+    }
+
+    private String saveAndReturnNumber(String expression) {
+        if(variables.keySet().contains(label))
+            variables.remove(label);
+        Number number = new Number(label, Double.valueOf(expression));
+        variables.put(label, number);
+        return number.toString();
     }
 }
