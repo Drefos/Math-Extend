@@ -40,25 +40,17 @@ public class Calculator {
         int multiplicationIndex = findMultiplication(expression);
         int divisionIndex = findDivision(expression);
         int operatorIndex;
-        double firstNumber, secondNumber;
 
         while (multiplicationIndex != divisionIndex) {
             operatorIndex = getEarlierIndex(multiplicationIndex, divisionIndex);
 
-            firstNumber = getNumberBeforeIndex(expression, operatorIndex);
-            secondNumber = getNumberAfterIndex(expression, operatorIndex);
-
-            expression = replaceOperationWithResult(expression, firstNumber, secondNumber, expression.charAt(operatorIndex));
+            expression = computeOperationOnIndex(expression, operatorIndex);
 
             multiplicationIndex = findMultiplication(expression);
             divisionIndex = findDivision(expression);
         }
         while ((operatorIndex = getFirstOperatorIndex(expression)) != -1) {
-            firstNumber = getNumberBeforeIndex(expression, operatorIndex);
-            secondNumber = getNumberAfterIndex(expression, operatorIndex);
-
-            expression = replaceOperationWithResult(expression, firstNumber, secondNumber, expression.charAt(operatorIndex));
-
+            expression = computeOperationOnIndex(expression, operatorIndex);
         }
         return expression;
     }
@@ -85,17 +77,35 @@ public class Calculator {
         return -1;
     }
 
+    private String computeOperationOnIndex(String expression, int operatorIndex) {
+        int startIndex, endIndex;
+        startIndex = getNumberIndexBeforeOperation(expression, operatorIndex);
+        endIndex = getNumberIndexAfterOperation(expression, operatorIndex);
+
+        return replaceOperationWithResult(expression, startIndex, endIndex, operatorIndex);
+    }
+
     private double getNumberBeforeIndex(String expression, int operatorIndex) {
+        int i = getNumberIndexBeforeOperation(expression, operatorIndex);
+        return Double.valueOf(expression.substring(i, operatorIndex));
+    }
+
+    private int getNumberIndexBeforeOperation(String expression, int operatorIndex) {
         int i = operatorIndex - 1;
         while (i >= 0 && isNumber(expression, i)) i--;
-        return Double.valueOf(expression.substring(i + 1, operatorIndex));
+        return i+1;
     }
 
     private double getNumberAfterIndex(String expression, int operatorIndex) {
+        int i = getNumberIndexAfterOperation(expression, operatorIndex);
+        return Double.valueOf(expression.substring(operatorIndex + 1, i));
+    }
+
+    private int getNumberIndexAfterOperation(String expression, int operatorIndex) {
         int i = operatorIndex + 1;
         if (expression.charAt(i) == '-') i++;
         while (i < expression.length() && isNumber(expression, i)) i++;
-        return Double.valueOf(expression.substring(operatorIndex + 1, i));
+        return i;
     }
 
     private boolean isNumber(String expression, int i) {
@@ -118,8 +128,11 @@ public class Calculator {
         }
     }
 
-    private String replaceOperationWithResult(String expression, double firstNumber, double secondNumber, char operation) {
+    private String replaceOperationWithResult(String expression, int start, int end, int operator) {
+        double firstNumber = getNumberBeforeIndex(expression, operator);
+        double secondNumber = getNumberAfterIndex(expression, operator);
         double result = 0;
+        char operation = expression.charAt(operator);
         switch (operation) {
             case '*':
                 result = firstNumber * secondNumber;
@@ -134,7 +147,7 @@ public class Calculator {
                 result = firstNumber - secondNumber;
                 break;
         }
-        return expression.replace("" + firstNumber + operation + secondNumber, String.valueOf(result));
+        return expression.replace(expression.substring(start, end), String.valueOf(result));
     }
 
     private int getFirstOperatorIndex(String expression) {
