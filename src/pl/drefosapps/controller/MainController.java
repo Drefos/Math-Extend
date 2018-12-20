@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
+import pl.drefosapps.model.Interpreter;
 import pl.drefosapps.model.Number;
 
 import java.net.URL;
@@ -29,11 +30,17 @@ public class MainController implements Initializable {
     MenuItem clearOutput;
 
     ObservableMap<String, Number> variables;
+    Interpreter interpreter;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         configMenu();
         configTableView();
+        createInterpreter();
+    }
+
+    private void createInterpreter() {
+        interpreter = new Interpreter(variables);
     }
 
     private void configMenu() {
