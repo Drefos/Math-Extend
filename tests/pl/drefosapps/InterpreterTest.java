@@ -46,7 +46,7 @@ public class InterpreterTest {
         assertEquals("33.19", interpreter.interpret(l2));
 
         String l3 = "5/2*3-6+0.1";
-        assertEquals("11.6", interpreter.interpret(l3));
+        assertEquals("1.6", interpreter.interpret(l3));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class InterpreterTest {
         assertEquals("16.0", interpreter.interpret(l1));
 
         String l2 = "3.2-15.8/(2.2+ 3.2)";
-        assertEquals("0.2(740)", interpreter.interpret(l2));
+        assertEquals("0.2740740741", interpreter.interpret(l2));
     }
 
     @Test
@@ -73,9 +73,9 @@ public class InterpreterTest {
     @Test
     void checkAssignmentTest() {
         String l1 = "A=13.5 + 8/2";
-        assertEquals("A=17.5", interpreter.interpret(l1));
+        assertEquals("A = 17.5", interpreter.interpret(l1));
 
         String l2 = "B =1 1 *4. 3";
-        assertEquals("B=47.3", interpreter.interpret(l2));
+        assertEquals("B = 47.3", interpreter.interpret(l2));
     }
 }
