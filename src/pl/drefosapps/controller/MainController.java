@@ -9,7 +9,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
+import pl.drefosapps.model.Interpreter;
 import pl.drefosapps.model.Number;
 
 import java.net.URL;
@@ -29,15 +31,25 @@ public class MainController implements Initializable {
     MenuItem clearOutput;
 
     ObservableMap<String, Number> variables;
+    Interpreter interpreter;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         configMenu();
         configTableView();
+        createInterpreter();
+        configInputArea();
+    }
+
+    private void createInterpreter() {
+        interpreter = new Interpreter(variables);
     }
 
     private void configMenu() {
-        clearInput.setOnAction(x -> inputTextArea.clear());
+        clearInput.setOnAction(x -> {
+            inputTextArea.clear();
+            inputTextArea.appendText("$");
+        });
         clearOutput.setOnAction(x -> outputTextArea.clear());
     }
 
@@ -55,4 +67,17 @@ public class MainController implements Initializable {
         placeHolder.setStyle("-fx-background-color:linear-gradient(from 50px 12px to 50px 37px , repeat, #686868 49% , #373737 12% )");
         tableView.setPlaceholder(placeHolder);
     }
+
+    private void configInputArea() {
+        inputTextArea.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                String[] lines = inputTextArea.getText().split("\n");
+                String lastLine = lines[lines.length - 1];
+                outputTextArea.appendText("->" + interpreter.interpret(lastLine.replace("$", "")) + "\n");
+                inputTextArea.appendText("$");
+            }
+        });
+        inputTextArea.appendText("$");
+    }
+
 }
